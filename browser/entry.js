@@ -46,11 +46,27 @@ function createScene (render) {
     return scene;
 }
 
-function createViewport (scene, width, height) {
+function createViewport (scene, opts) {
+    if (!opts) opts = {};
+    var width = opts.width || 400;
+    var height = opts.height || 300;
+    
     var renderer = new three.SVGRenderer();
     renderer.setSize(width, height);
     
-    var camera = new three.PerspectiveCamera(45, width / height, 0.1, 10000);
+    var camera = opts.fov
+        ? new three.PerspectiveCamera(
+            opts.fov,
+            width / height,
+            opts.near === undefined ? 0.1 : opts.near,
+            opts.far === undefined ? 10000 : opts.far
+        )
+        : new three.OrthographicCamera(
+            width / - 2, width / 2, height / 2, height / - 2,
+            opts.near === undefined ? -2000 : opts.near,
+            opts.far === undefined ? 1000 : opts.far
+        )
+    ;
     scene.add(camera);
     
     var viewport = {
@@ -77,7 +93,10 @@ $(function () {
     var w = Math.floor($(window).width() - 4) / 2;
     var h = Math.floor($(window).height() - 4) / 2;
     
-    var v0 = scene.createViewport(w, h).appendTo('#port0');
+    var v0 = scene.createViewport({
+        width : w, height : h
+    }).appendTo('#port0');
+    
     v0.camera.position.z = 300;
     v0.camera.lookAt(scene.position);
     $('#port0')
@@ -85,7 +104,10 @@ $(function () {
         .width(w).height(h)
     ;
     
-    var v1 = scene.createViewport(w, h).appendTo('#port1');
+    var v1 = scene.createViewport({
+        width : w, height : h
+    }).appendTo('#port1');
+    
     v1.camera.position.y = 300;
     v1.camera.lookAt(scene.position);
     $('#port1')
@@ -93,7 +115,10 @@ $(function () {
         .width(w).height(h)
     ;
     
-    var v2 = scene.createViewport(w, h).appendTo('#port2');
+    var v2 = scene.createViewport({
+        width : w, height : h
+    }).appendTo('#port2');
+    
     v2.camera.position.x = 300;
     v2.camera.lookAt(scene.position);
     $('#port2')
@@ -101,7 +126,10 @@ $(function () {
         .width(w).height(h)
     ;
     
-    var v3 = scene.createViewport(w, h).appendTo('#port3');
+    var v3 = scene.createViewport({
+        width : w, height : h, fov : 45
+    }).appendTo('#port3');
+    
     v3.camera.position.x = 200;
     v3.camera.position.y = 150;
     v3.camera.position.z = 200;
