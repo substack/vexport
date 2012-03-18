@@ -28,6 +28,9 @@ function createScene (render) {
         t += dt;
         
         render(t);
+        scene.viewports.forEach(function (v) {
+            v.render();
+        });
     }
     
     process.nextTick(function animate () {
@@ -35,36 +38,76 @@ function createScene (render) {
         display();
     });
     
+    scene.viewports = [];
+    scene.createViewport = function (width, height) {
+        return createViewport(scene, width, height);
+    };
+    
     return scene;
 }
 
+function createViewport (scene, width, height) {
+    var renderer = new three.SVGRenderer();
+    renderer.setSize(width, height);
+    
+    var camera = new three.PerspectiveCamera(45, width / height, 0.1, 10000);
+    scene.add(camera);
+    
+    var viewport = {
+        camera : camera,
+        renderer : renderer,
+        appendTo : function (target) {
+            $(renderer.domElement).appendTo(target);
+            return viewport;
+        },
+        render : function () {
+            renderer.render(scene, camera);
+        },
+    };
+    scene.viewports.push(viewport);
+    
+    return viewport;
+}
+
 $(function () {
-    var renderers = [
-        new three.SVGRenderer(),
-        new three.SVGRenderer()
-    ];
-    renderers[0].setSize(400, 300);
-    renderers[1].setSize(400, 300);
-    
-    var cameras = [
-        new three.PerspectiveCamera(45, 400 / 300, 0.1, 10000),
-        new three.PerspectiveCamera(45, 400 / 300, 0.1, 10000)
-    ];
-    cameras[0].position.z = 300;
-    cameras[1].position.y = 300;
-    
     var scene = createScene(function (t) {
-        scene.children[0].rotation.z = t * 0.001;
-        renderers[0].render(scene, cameras[0]);
-        renderers[1].render(scene, cameras[1]);
+        scene.children[0].rotation.y = t * 0.001;
     });
     
-    scene.add(cameras[0]);
-    scene.add(cameras[1]);
+    var w = Math.floor($(window).width() - 4) / 2;
+    var h = Math.floor($(window).height() - 4) / 2;
     
-    cameras[0].lookAt(scene.position);
-    cameras[1].lookAt(scene.position);
+    var v0 = scene.createViewport(w, h).appendTo('#port0');
+    v0.camera.position.z = 300;
+    v0.camera.lookAt(scene.position);
+    $('#port0')
+        .css({ left : 1, top : 1 })
+        .width(w).height(h)
+    ;
     
-    $('#port0').append(renderers[0].domElement);
-    $('#port1').append(renderers[1].domElement);
+    var v1 = scene.createViewport(w, h).appendTo('#port1');
+    v1.camera.position.y = 300;
+    v1.camera.lookAt(scene.position);
+    $('#port1')
+        .css({ left : w + 2, top : 1 })
+        .width(w).height(h)
+    ;
+    
+    var v2 = scene.createViewport(w, h).appendTo('#port2');
+    v2.camera.position.x = 300;
+    v2.camera.lookAt(scene.position);
+    $('#port2')
+        .css({ left : 1, top : h + 2 })
+        .width(w).height(h)
+    ;
+    
+    var v3 = scene.createViewport(w, h).appendTo('#port3');
+    v3.camera.position.x = 200;
+    v3.camera.position.y = 150;
+    v3.camera.position.z = 200;
+    v3.camera.lookAt(scene.position);
+    $('#port3')
+        .css({ left : w + 2, top : h + 2 })
+        .width(w).height(h)
+    ;
 });
