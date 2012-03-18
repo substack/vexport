@@ -1,16 +1,8 @@
 var three = require('./three');
 
-$(function () {
-    var width = 400, height = 300;
-    var renderer = new three.SVGRenderer();
-    
-    renderer.setSize(width, height);
-    $('#viewer').append(renderer.domElement);
-    
-    var camera = new three.PerspectiveCamera(45, width / height, 0.1, 10000);
+function createScene (render) {
     var scene = new three.Scene();
-    camera.position.z = 300;
-        
+    
     var radius = 50, segments = 16, rings = 16;
     
     var sphere = new three.Mesh(
@@ -27,24 +19,54 @@ $(function () {
     pointLight.position.z = 130;
     scene.add(pointLight);
     
-    (function () {
-        (function animate () {
-            window.requestAnimationFrame(animate);
-            render();
-        })();
+    var t = 0;
+    var t0 = Date.now();
+    function display () {
+        var t1 = Date.now();
+        var dt = t1 - t0;
+        t0 = t1;
+        t += dt;
         
-        var t = 0;
-        var t0 = Date.now();
-        function render () {
-            var t1 = Date.now();
-            var dt = t1 - t0;
-            t0 = t1;
-            t += dt;
-            
-            camera.position.x = Math.cos(t * 0.001) * 200;
-            camera.position.z = Math.sin(t * 0.001) * 200;
-            camera.lookAt(scene.position);
-            renderer.render(scene, camera);
-        }
-    })();
+        render(t);
+    }
+    
+    process.nextTick(function animate () {
+        window.requestAnimationFrame(animate);
+        display();
+    });
+    
+    return scene;
+}
+
+$(function () {
+    var renderers = [
+        new three.SVGRenderer(),
+        new three.SVGRenderer()
+    ];
+    renderers[0].setSize(400, 300);
+    renderers[1].setSize(400, 300);
+    
+    var cameras = [
+        new three.PerspectiveCamera(45, 400 / 300, 0.1, 10000),
+        new three.PerspectiveCamera(45, 400 / 300, 0.1, 10000)
+    ];
+    cameras[0].position.z = 300;
+    cameras[1].position.y = 300;
+    
+    var scene = createScene(function (t) {
+        cameras[0].position.x = Math.cos(t * 0.001) * 200;
+        cameras[0].position.z = Math.sin(t * 0.001) * 200;
+        cameras[0].lookAt(scene.position);
+        renderers[0].render(scene, cameras[0]);
+        
+        cameras[1].position.x = Math.cos(t * 0.01) * 200;
+        cameras[1].position.z = Math.sin(t * 0.01) * 200;
+        cameras[1].lookAt(scene.position);
+        renderers[1].render(scene, cameras[1]);
+    });
+    scene.add(cameras[0]);
+    scene.add(cameras[1]);
+    
+    $('#port0').append(renderers[0].domElement);
+    $('#port1').append(renderers[1].domElement);
 });
