@@ -54,18 +54,16 @@ $(function () {
     cameras[1].position.y = 300;
     
     var scene = createScene(function (t) {
-        cameras[0].position.x = Math.cos(t * 0.001) * 200;
-        cameras[0].position.z = Math.sin(t * 0.001) * 200;
-        cameras[0].lookAt(scene.position);
+        scene.children[0].rotation.z = t * 0.001;
         renderers[0].render(scene, cameras[0]);
-        
-        cameras[1].position.x = Math.cos(t * 0.01) * 200;
-        cameras[1].position.z = Math.sin(t * 0.01) * 200;
-        cameras[1].lookAt(scene.position);
         renderers[1].render(scene, cameras[1]);
     });
+    
     scene.add(cameras[0]);
     scene.add(cameras[1]);
+    
+    cameras[0].lookAt(scene.position);
+    cameras[1].lookAt(scene.position);
     
     $('#port0').append(renderers[0].domElement);
     $('#port1').append(renderers[1].domElement);
