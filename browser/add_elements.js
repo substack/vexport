@@ -34,7 +34,9 @@ module.exports = function (scene, elements) {
         }
     };
     
-    elements.forEach(function (elem) {
-        scene.add(create[elem.type](elem));
+    var objects = elements.map(function (elem) {
+        return create[elem.type](elem);
     });
+    objects.forEach(function (obj) { scene.add(obj) });
+    return objects;
 };

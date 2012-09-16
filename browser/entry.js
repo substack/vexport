@@ -5,7 +5,7 @@ var world = require('./world.json');
 
 function createScene (render) {
     var scene = new three.Scene();
-    addElements(scene, world);
+    var meshes = addElements(scene, world);
     
     var pointLight = new three.PointLight(0xFFFFFF);
     pointLight.position.x = 10;
