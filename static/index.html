@@ -1,10 +1,13 @@
 <html>
 <head>
-  <script src="/jquery.js"></script>
-  <script src="/control-panel.js"></script>
-  <script src="/bundle.js"></script>
   <link rel="stylesheet" href="/bootstrap.min.css">
   <link rel="stylesheet" href="/style.css">
+  <script src="/jquery.js"></script>
+  <script src="/jquery.miniColors.min.js"></script>
+  <!-- Note this css file MUST behind its js file -->
+  <link  type="text/css" rel="stylesheet" href="/jquery.miniColors.css">
+  <script src="/control-panel.js"></script>
+  <script src="/bundle.js"></script>   
   <script type="text/template" id="control-panel">
     <div id="obj-nav-btns" class="btn-group">
       <button id="up-btn" class="btn">&#8593;</button>
@@ -26,7 +29,7 @@
         <a href="#"><img src="/images/move.png"></a>
       </li>
       <li>
-        <a href="#">Link</a>
+      <p><input type="text" name="color2" class="color black" size="7"/></p>
       </li>
     </ul>
   </div>

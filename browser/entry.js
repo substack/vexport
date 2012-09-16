@@ -131,4 +131,16 @@ $(function () {
         .css({ left : w + 2, top : h + initTop + 1 })
         .width(w).height(h)
     ;
+
+    // Color pikcer
+    $(".color").miniColors({
+        letterCase: 'uppercase',
+        open: function(hex, rgb) {
+        },
+        close: function(hex, rgb) {
+        },
+        change: function(hex, rgb) {
+            scene.children[0].material.color = new three.Color('0x' + hex.substr(1));
+        },
+    });
 });

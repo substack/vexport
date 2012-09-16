@@ -12,6 +12,7 @@ module.exports = function (scene, elements) {
             obj.position.x = pos[0] || 0;
             obj.position.y = pos[1] || 0;
             obj.position.z = pos[2] || 0;
+
             return obj;
         },
         mesh : function (m) {
@@ -28,13 +29,16 @@ module.exports = function (scene, elements) {
             });
             g.computeBoundingSphere();
             
-            return new three.Mesh(g, new three.MeshLambertMaterial({
+            var obj =  new three.Mesh(g, new three.MeshLambertMaterial({
                 color: 0x8030a5
             }));
+
+            return obj;
         }
     };
     
     elements.forEach(function (elem) {
         scene.add(create[elem.type](elem));
     });
+
 };
