@@ -1,11 +1,15 @@
 var three = require('./three');
 var createMesh = require('./mesh');
-var addElements = require('./add_elements');
+
 var world = require('./world.json');
+var addElements = require('./add_elements');
+var stringify = require('./stringify');
 
 function createScene (render) {
     var scene = new three.Scene();
-    var meshes = addElements(scene, world);
+    var objects = addElements(scene, world);
+    
+    console.log(stringify(objects));
     
     var pointLight = new three.PointLight(0xFFFFFF);
     pointLight.position.x = 10;
