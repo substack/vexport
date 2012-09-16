@@ -8,8 +8,24 @@ var stringify = require('./stringify');
 function createScene (render) {
     var scene = new three.Scene();
     var objects = addElements(scene, world);
+    world.forEach(function (obj, ix) {
+        var option = $('<option>').text(ix + ' (' + obj.type + ')').val(ix);
+        option.appendTo('#selected');
+    });
     
-    console.log(stringify(objects));
+    $(window).on('keydown', function (ev) {
+        var delta = {
+            38 : [ 0, +1 ],
+            40 : [ 0, -1 ],
+            37 : [ -1, 0 ],
+            39 : [ +1, 0 ]
+        }[ev.keyCode];
+        if (!delta) return;
+        var ix = $('#selected').val();
+        
+        objects[ix].position.x += delta[0];
+        objects[ix].position.y += delta[1];
+    });
     
     var pointLight = new three.PointLight(0xFFFFFF);
     pointLight.position.x = 10;
