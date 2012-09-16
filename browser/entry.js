@@ -190,7 +190,12 @@ $(function () {
         close: function(hex, rgb) {
         },
         change: function(hex, rgb) {
-            scene.children[0].material.color = new three.Color('0x' + hex.substr(1));
+            var i = 0;
+            for (; i < scene.children.length; ++i) {
+                if (scene.children[i] instanceof three.Mesh) {
+                    scene.children[i].material.color = new three.Color('0x' + hex.substr(1));
+                }
+            }  
         },
     });
 });
