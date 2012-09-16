@@ -3,10 +3,16 @@ var three = require('./three');
 module.exports = function (scene, elements) { 
     var create = {
         sphere : function (m) {
-            return new three.Mesh(
+            var obj = new three.Mesh(
                 new three.SphereGeometry(m.radius, m.segments, m.rings),
                 new three.MeshLambertMaterial({ color: 0xCC0000 })
             );
+            var pos = m.position || {};
+            
+            obj.position.x = pos[0] || 0;
+            obj.position.y = pos[1] || 0;
+            obj.position.z = pos[2] || 0;
+            return obj;
         },
         mesh : function (m) {
             var g = new three.Geometry();
