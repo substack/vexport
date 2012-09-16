@@ -16,3 +16,36 @@ body {
     top: 5px;
     left: 5px;
 }
+
+
+#obj-nav-btns {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 90px;
+  height: 60px;
+}
+
+#obj-nav-btns button {
+  position: absolute;
+}
+
+#up-btn {
+  top: 0;
+  right: 30px;
+}
+
+#down-btn {
+  bottom: 0;
+  right: 30px;
+}
+
+#right-btn {
+  top: 20px;
+  right: 0;
+}
+
+#left-btn {
+  top: 20px;
+  left: 0;
+}
