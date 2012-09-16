@@ -11,8 +11,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "browserify browser/entry.js -o static/bundle.js",
-    "watch": "browserify browser/entry.js -o static/bundle.js --debug -v -w"
+    "build": "browserify browser/entry.js browser/script.js -o static/bundle.js",
+    "watch": "browserify browser/entry.js browser/script.js -o static/bundle.js --debug -v -w"
   },
   "analyze": "false"
 }
