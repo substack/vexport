@@ -6,7 +6,6 @@ function createScene (render) {
     
     var radius = 50, segments = 16, rings = 16;
     
-    /*
     var sphere = new three.Mesh(
         new three.SphereGeometry(radius, segments, rings),
         new three.MeshLambertMaterial({
@@ -14,10 +13,6 @@ function createScene (render) {
         })
     );
     scene.add(sphere);
-    */
-    
-    //var m = createMesh();
-    //scene.add(m);
     
     var pointLight = new three.PointLight(0xFFFFFF);
     pointLight.position.x = 10;
