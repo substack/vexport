@@ -1,4 +1,5 @@
 var three = require('./three');
+var createPoint = require('./point');
 
 module.exports = function (scene, elements) { 
     var create = {
@@ -12,7 +13,7 @@ module.exports = function (scene, elements) {
             obj.position.x = pos[0] || 0;
             obj.position.y = pos[1] || 0;
             obj.position.z = pos[2] || 0;
-            return obj;
+            return [obj];
         },
         mesh : function (m) {
             var g = new three.Geometry();
@@ -28,14 +29,28 @@ module.exports = function (scene, elements) {
             });
             g.computeBoundingSphere();
             
-            return new three.Mesh(g, new three.MeshLambertMaterial({
+            var obj = new three.Mesh(g, new three.MeshLambertMaterial({
                 color: 0x8030a5
             }));
+
+            var objs = [obj];
+            // add points and the associations
+            m.vertices.forEach(function (v) {
+                var pt = createPoint(v[0], v[1], v[2]);
+                pt.refParent = obj;
+                obj.refPoints = [];
+                obj.refPoints.push(pt);
+                objs.push(pt);
+            });
+
+            return objs;
         }
     };
     
-    var objects = elements.map(function (elem) {
-        return create[elem.type](elem);
+    var objects = [];
+    elements.forEach(function (elem) {
+        var results = create[elem.type](elem);
+        objects = objects.concat(results);
     });
     objects.forEach(function (obj) { scene.add(obj) });
     return objects;
