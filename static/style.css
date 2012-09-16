@@ -22,8 +22,8 @@ body {
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 90px;
-  height: 60px;
+  width: 150px;
+  height: 68px;
 }
 
 #obj-nav-btns button {
@@ -32,12 +32,12 @@ body {
 
 #up-btn {
   top: 0;
-  right: 30px;
+  right: 56px;
 }
 
 #down-btn {
   bottom: 0;
-  right: 30px;
+  right: 56px;
 }
 
 #right-btn {
