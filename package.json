@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "browserify browser/entry.js -o static/bundle.js"
+    "build": "browserify browser/entry.js -o static/bundle.js",
+    "watch": "browserify browser/entry.js -o static/bundle.js -v -w"
   },
   "analyze": "false"
 }
