@@ -21,7 +21,7 @@ function createScene (render) {
         t0 = t1;
         t += dt;
 
-        render(t);
+        if (typeof render === 'function') render(t);
         scene.viewports.forEach(function (v) {
             v.render();
         });
@@ -80,9 +80,7 @@ function createViewport (scene, opts) {
 }
 
 $(function () {
-    var scene = createScene(function (t) {
-        scene.children[0].rotation.y = t * 0.001;
-    });
+    var scene = createScene(function (t) {});
 
     var w = Math.floor($(window).width() - 4) / 2;
     var h = Math.floor($(window).height() - 4) / 2;
