@@ -3,6 +3,7 @@
   <script src="/jquery.js"></script>
   <script src="/control-panel.js"></script>
   <script src="/bundle.js"></script>
+  <link rel="stylesheet" href="/bootstrap.min.css">
   <link rel="stylesheet" href="/style.css">
   <script type="text/template" id="control-panel">
     <div id="obj-nav-btns" class="btn-group">
@@ -14,19 +15,36 @@
   </script>
 </head>
 <body>
-<div id="view">
-    <div id="port0" class="viewport v4">
-      <div class="label">front</div>
-    </div>
-    <div id="port1" class="viewport v4">
-      <div class="label">top</div>
-    </div>
-    <div id="port2" class="viewport v4">
-      <div class="label">left</div>
-    </div>
-    <div id="port3" class="viewport v4">
-      <div class="label">perspective</div>
-    </div>
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">VexPort</a>
+    <ul class="nav">
+      <li class="active">
+        <a href="#">Create</a>
+      </li>
+      <li>
+        <a href="#">Link</a>
+      </li>
+      <li>
+        <a href="#">Link</a>
+      </li>
+    </ul>
   </div>
+</div>
+
+<div id="view">
+  <div id="port0" class="viewport v4">
+    <div class="label">front</div>
+  </div>
+  <div id="port1" class="viewport v4">
+    <div class="label">top</div>
+  </div>
+  <div id="port2" class="viewport v4">
+    <div class="label">left</div>
+  </div>
+  <div id="port3" class="viewport v4">
+    <div class="label">perspective</div>
+  </div>
+</div>
 </body>
 </html>
