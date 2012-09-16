@@ -190,7 +190,7 @@ $(function () {
         close: function(hex, rgb) {
         },
         change: function(hex, rgb) {
-            scene.children[0].material.color = new three.Color('0x' + hex.substr(1));
+            scene.children[5].material.color = new three.Color('0x' + hex.substr(1));
         },
     });
 });
