@@ -3,7 +3,8 @@
   "version": "0.0.0-1",
   "subdomain": "vexport",
   "dependencies": {
-    "ecstatic": "~0.1.5"
+    "ecstatic": "~0.1.5",
+    "shoe": "~0.0.7"
   },
   "devDependencies": {
     "browserify": "~1.15.5"
