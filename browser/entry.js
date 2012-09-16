@@ -1,16 +1,44 @@
 var three = require('./three');
 var createMesh = require('./mesh');
 
-var world = require('./world.json');
 var addElements = require('./add_elements');
-var stringify = require('./stringify');
+var serialize = require('./serialize');
+
+var shoe = require('shoe');
+var Model = require('scuttlebutt/model');
 
 function createScene (render) {
     var scene = new three.Scene();
-    var objects = addElements(scene, world);
-    world.forEach(function (obj, ix) {
+    var objects = [];
+    
+    var model = (function () {
+        var stream = shoe('/shoe');
+        var m = new Model;
+        stream.pipe(m.createStream()).pipe(stream);
+        return m;
+    })();
+    
+window.model = model; 
+    model.on('update', function (ix, obj) {
         var option = $('<option>').text(ix + ' (' + obj.type + ')').val(ix);
         option.appendTo('#selected');
+        
+        if (!objects[ix]) {
+            objects[ix] = addElements(scene, [obj])[0];
+        }
+        
+        if (obj.type === 'sphere') {
+            objects[ix].position.x = obj.position[0];
+            objects[ix].position.y = obj.position[1];
+            objects[ix].position.z = obj.position[2];
+        }
+        else {
+            obj.vertices.forEach(function (v, i) {
+                objects[ix].geometry.vertices[i].position.x = v[0];
+                objects[ix].geometry.vertices[i].position.y = v[1];
+                objects[ix].geometry.vertices[i].position.z = v[2];
+            });
+        }
     });
     
     $(window).on('keydown', function (ev) {
@@ -23,8 +51,10 @@ function createScene (render) {
         if (!delta) return;
         var ix = $('#selected').val();
         
-        objects[ix].position.x += delta[0];
-        objects[ix].position.y += delta[1];
+        objects[ix].position.x += delta[0] * 4;
+        objects[ix].position.y += delta[1] * 4;
+        
+        model.set(String(ix), serialize(objects[ix]));
     });
     
     var pointLight = new three.PointLight(0xFFFFFF);

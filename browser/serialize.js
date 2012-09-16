@@ -1,10 +1,6 @@
 var three = require('./three');
 
-module.exports = function (objects) {
-    return JSON.stringify(objects.map(literalize))
-}
-
-function literalize (obj) {
+module.exports = function (obj) {
     if (obj.geometry instanceof three.SphereGeometry) {
         return {
             type : 'sphere',

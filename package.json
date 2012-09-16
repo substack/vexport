@@ -4,7 +4,8 @@
   "subdomain": "vexport",
   "dependencies": {
     "ecstatic": "~0.1.5",
-    "shoe": "~0.0.7"
+    "shoe": "~0.0.7",
+    "scuttlebutt" : "~3.2.3"
   },
   "devDependencies": {
     "browserify": "~1.15.5"
