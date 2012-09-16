@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "browserify": "~1.15.5"
-  }
+  },
   "scripts": {
     "start": "node server.js",
     "build": "browserify browser/entry.js -o static/bundle.js"
