@@ -1,0 +1,18 @@
+body {
+    background-color: rgb(160,120,120);
+    margin: 0px;
+    overflow: hidden;
+}
+
+.viewport {
+    border: 1px solid rgb(120,80,80);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.label {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
