@@ -1,11 +1,20 @@
 <html>
 <head>
   <script src="/jquery.js"></script>
+  <script src="/control-panel.js"></script>
   <script src="/bundle.js"></script>
   <link rel="stylesheet" href="/style.css">
+  <script type="text/template" id="control-panel">
+    <div id="obj-nav-btns" class="btn-group">
+      <button id="up-btn" class="btn">&#8593;</button>
+      <button id="down-btn" class="btn">&#8595;</button>
+      <button id="left-btn" class="btn">&#8592;</button>
+      <button id="right-btn" class="btn">&#8594;</button>
+    </div>
+  </script>
 </head>
 <body>
-  <div id="view">
+<div id="view">
     <div id="port0" class="viewport v4">
       <div class="label">front</div>
     </div>
